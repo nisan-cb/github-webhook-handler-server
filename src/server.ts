@@ -38,6 +38,10 @@ app.post('/webhooks/github', (req: Request, res: Response) => {
     }
 });
 
+app.get('/', (req: Request, res: Response) => {
+    res.send('hello');
+})
+
 app.listen(PORT, () => {
     console.log(`Webhook server is running on port ${PORT} `);
 });
