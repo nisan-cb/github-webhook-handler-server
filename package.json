@@ -1,0 +1,29 @@
+{
+  "name": "github-webhook-handler-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/server.js",
+    "tsc:watch": "tsc -w",
+    "nodemon": "nodemon",
+    "dev": "cross-env MODE=development npm-run-all --parallel tsc:watch nodemon "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.3.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
+}
