@@ -14,7 +14,11 @@ const verifySignature = (req: Request) => {
         .digest("hex");
     let trusted = Buffer.from(`sha256=${signature}`, 'ascii');
     let untrusted = Buffer.from(req.get("x-hub-signature-256") || '', 'ascii');
-    return crypto.timingSafeEqual(trusted, untrusted);
+    try {
+        return crypto.timingSafeEqual(trusted, untrusted);
+    } catch (error) {
+        return false;
+    }
 };
 
 export default verifySignature;
