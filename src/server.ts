@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { exec } from 'child_process';
 import cors from 'cors';
+import verifySignature from './services/verifySignature';
 
 dotenv.config();
 
@@ -16,8 +17,15 @@ const SCRIPT_PATH = process.env.SCRIPT_PATH || '';
 
 app.use(bodyParser.json());
 
-app.post('/webhooks/github', (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
+    res.send('hello');
+})
 
+app.post('/webhooks/github', (req: Request, res: Response) => {
+    if (!verifySignature(req)) {
+        res.status(401).send("Unauthorized");
+        return;
+    }
     const branch = req.body.ref.split('/').pop(); // Extract the branch name from the ref
 
     if (req.body && req.body.ref && branch === BRANCH_NAME) {
@@ -38,9 +46,10 @@ app.post('/webhooks/github', (req: Request, res: Response) => {
     }
 });
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('hello');
-})
+
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Webhook server is running on port ${PORT} `);
