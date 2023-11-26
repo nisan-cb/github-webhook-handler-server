@@ -2,12 +2,14 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { exec } from 'child_process';
-
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 4000;
+app.use(cors());
+
+const PORT = process.env.PORT || 4000;
 const BRANCH_NAME = process.env.BRANCH_NAME || 'master';
 const SCRIPT_PATH = process.env.SCRIPT_PATH || '';
 
@@ -36,6 +38,6 @@ app.post('/webhooks/github', (req: Request, res: Response) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Webhook server is running on port ${port} `);
+app.listen(PORT, () => {
+    console.log(`Webhook server is running on port ${PORT} `);
 });
