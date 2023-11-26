@@ -21,6 +21,7 @@ app.post('/webhooks/github', (req: Request, res: Response) => {
     const branch = req.body.ref.split('/').pop(); // Extract the branch name from the ref
 
     if (req.body && req.body.ref && branch === BRANCH_NAME) {
+        res.status(200).send('Webhook received successfully');
         // Run your Bash script here
         exec(SCRIPT_PATH, (error, stdout, stderr) => {
             if (error) {
@@ -31,7 +32,6 @@ app.post('/webhooks/github', (req: Request, res: Response) => {
                 console.error(`Script stderr: ${stderr}`);
             }
             console.log(`Script output: ${stdout}`);
-            res.status(200).send('Webhook received successfully');
         });
     } else {
         res.send('Ignoring webhook');
